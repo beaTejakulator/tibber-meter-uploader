@@ -1,4 +1,3 @@
-# https://developers.home-assistant.io/docs/add-ons/repository#repository-configuration
-name: Example Home Assistant add-on repository
-url: 'https://github.com/home-assistant/addons-example'
+name: Tibber Meter Uploader
+url: 'https://github.com/beaTejakulator/tibber-meter-uploader'
 maintainer: Awesome Maintainer <awesome@example.com>
