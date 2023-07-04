@@ -1,9 +1,9 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: Tibber Meter Uploader
-version: "1.2.0"
+version: "1.0.0"
 slug: tibber-meter-uploader
 description: An add-on to upload meter data to Tibber.
-url: "https://github.com/home-assistant/addons-example/tree/main/example"
+url: "https://github.com/beaTejakulator/tibber-meter-uploader/tree/main/example"
 arch:
   - armhf
   - armv7
@@ -13,8 +13,4 @@ arch:
 init: false
 map:
   - share:rw
-options:
-  message: "Hello world..."
-schema:
-  message: "str?"
-image: "ghcr.io/home-assistant/{arch}-addon-example"
+image: "ghcr.io/beaTejakulator/{arch}-tibber-meter-uploader"
