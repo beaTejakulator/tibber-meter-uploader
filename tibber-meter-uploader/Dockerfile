@@ -1,10 +1,10 @@
 # FROM debian:latest
 ARG BUILD_FROM
-FROM openjdk:11-jdk-slim-buster
+FROM debian:buster-slim
 
 # Setting up the environment
 ENV DRY_RUN=false
-ENV JAVA_HOME=/usr/local/openjdk-11
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-armhf
 ENV PATH=$JAVA_HOME/bin:$PATH
 ENV LANG=C.UTF-8
 ENV READINGS_SCRIPT_COMMAND=/config/tibber_uploader/read_meter.sh
@@ -21,7 +21,7 @@ COPY run.sh /opt/myapp/run.sh
 RUN chmod a+x /opt/myapp/run.sh
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends ca-certificates curl jq bash && \
+    apt-get install -y --no-install-recommends openjdk-11-jdk ca-certificates curl jq bash && \
     rm -rf /var/lib/apt/lists/* # buildkit
 
 RUN addgroup --system myapp && adduser --system --ingroup myapp myapp
