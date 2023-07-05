@@ -13,4 +13,4 @@ arch:
 init: false
 map:
   - share:rw
-image: "ghcr.io/beatejakulator/{arch}-tibber-meter-uploader"
+image: "https://hub.docker.com/repository/docker/beatejakulator/{arch}-tibber-meter-uploader"
