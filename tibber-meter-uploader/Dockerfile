@@ -22,32 +22,31 @@ COPY run.sh /opt/myapp/run.sh
 RUN chmod a+x /opt/myapp/run.sh
 
 RUN set -eux; \
-    apt-get update; \
-    apt-get install -y --no-install-recommends ca-certificates p11-kit curl ; \
-    rm -rf /var/lib/apt/lists/*; \
-    arch="$(dpkg --print-architecture)"; \
+    apk update; \
+    apk add --no-cache ca-certificates p11-kit curl ; \
+    arch="$(apk --print-arch)"; \
     case "$arch" in \
-        'amd64') \
-            downloadUrl='https://github.com/adoptopenjdk/openjdk11-binaries/releases/download/jdk-11.0.2%2B9/OpenJDK11U-jdk_x64_linux_hotspot_11.0.2_9.tar.gz'; \
-            ;; \
-        'arm64') \
-            downloadUrl='https://github.com/adoptopenjdk/openjdk11-binaries/releases/download/jdk-11.0.2%2B9/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.2_9.tar.gz'; \
-            ;; \
-        *) echo >&2 "error: unsupported architecture: '$arch'"; exit 1 ;; \
+    'x86_64') \
+    downloadUrl='https://github.com/adoptopenjdk/openjdk11-binaries/releases/download/jdk-11.0.2%2B9/OpenJDK11U-jdk_x64_linux_hotspot_11.0.2_9.tar.gz'; \
+    ;; \
+    'aarch64') \
+    downloadUrl='https://github.com/adoptopenjdk/openjdk11-binaries/releases/download/jdk-11.0.2%2B9/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.2_9.tar.gz'; \
+    ;; \
+    *) echo >&2 "error: unsupported architecture: '$arch'"; exit 1 ;; \
     esac; \
     curl -Lso openjdk.tgz "$downloadUrl"; \
     mkdir -p "$JAVA_HOME"; \
     tar --extract --file openjdk.tgz --directory "$JAVA_HOME" --strip-components 1 --no-same-owner ; \
     rm openjdk.tgz*; \
-    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+    apk del curl; \
     javac --version; \
     java --version
 
-RUN apt-get update && apt-get install -y curl jq bash && apt-get clean && rm -rf /var/lib/apt/lists/* # buildkit
+RUN apk update && apk add --no-cache curl jq bash # buildkit
 
-RUN addgroup --system myapp && adduser --system --ingroup myapp myapp 
+RUN addgroup -S myapp && adduser -S -G myapp myapp
 
-RUN mkdir -p /opt/myapp && chown -R myapp:myapp /opt/myapp 
+RUN mkdir -p /opt/myapp && chown -R myapp:myapp /opt/myapp
 
 WORKDIR /opt/myapp
 
