@@ -1,6 +1,6 @@
 # FROM debian:latest
 ARG BUILD_FROM
-FROM openjdk:11-jdk
+FROM openjdk:11-jdk-slim-buster
 
 # Setting up the environment
 ENV DRY_RUN=false
@@ -20,9 +20,8 @@ RUN chmod +x /opt/myapp/read_meter.sh
 COPY run.sh /opt/myapp/run.sh
 RUN chmod a+x /opt/myapp/run.sh
 
-RUN set -eux; \
-    apk update; \
-    apk add --no-cache ca-certificates p11-kit curl jq bash; \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ca-certificates curl jq bash && \
     rm -rf /var/lib/apt/lists/* # buildkit
 
 RUN addgroup --system myapp && adduser --system --ingroup myapp myapp
