@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: Tibber Meter Uploader
-version: "1.0.0"
+version: "latest"
 slug: tibber-meter-uploader
 description: An add-on to upload meter data to Tibber.
 url: "https://github.com/beatejakulator/tibber-meter-uploader/tree/main/example"
