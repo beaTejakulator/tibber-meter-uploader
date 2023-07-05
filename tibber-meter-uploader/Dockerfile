@@ -1,13 +1,13 @@
-#FROM debian:latest
+# FROM debian:latest
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
 # Setting up the environment
 ENV DRY_RUN=false
-ENV JAVA_HOME=/usr/local/openjdk-11
+ENV JAVA_HOME=/usr/local/openjdk-17
 ENV PATH=$JAVA_HOME/bin:$PATH
 ENV LANG=C.UTF-8
-ENV JAVA_VERSION=11.0.2+9
+ENV JAVA_VERSION=17.0.1+12
 ENV READINGS_SCRIPT_COMMAND=/config/tibber_uploader/read_meter.sh
 ENV READINGS_SOURCE_CLASS=ScriptedRestApiMeterReadingSource
 ENV TIBBER_METER_REGISTER_ID=1-1:1.8.0
@@ -27,10 +27,10 @@ RUN set -eux; \
     arch="$(apk --print-arch)"; \
     case "$arch" in \
     'x86_64') \
-    downloadUrl='https://github.com/adoptopenjdk/openjdk11-binaries/releases/download/jdk-11.0.2%2B9/OpenJDK11U-jdk_x64_linux_hotspot_11.0.2_9.tar.gz'; \
+    downloadUrl='https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.1%2B12/OpenJDK17U-jdk_x64_linux_hotspot_17.0.1_12.tar.gz'; \
     ;; \
     'aarch64') \
-    downloadUrl='https://github.com/adoptopenjdk/openjdk11-binaries/releases/download/jdk-11.0.2%2B9/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.2_9.tar.gz'; \
+    downloadUrl='https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.1%2B12/OpenJDK17U-jdk_aarch64_linux_hotspot_17.0.1_12.tar.gz'; \
     ;; \
     *) echo >&2 "error: unsupported architecture: '$arch'"; exit 1 ;; \
     esac; \
@@ -42,9 +42,9 @@ RUN set -eux; \
     javac --version; \
     java --version
 
-RUN apk update && apk add --no-cache curl jq bash # buildkit
+RUN apk update && apk add -y curl jq bash && apk del && rm -rf /var/lib/apt/lists/* # buildkit
 
-RUN addgroup -S myapp && adduser -S -G myapp myapp
+RUN addgroup --system myapp && adduser --system --ingroup myapp myapp
 
 RUN mkdir -p /opt/myapp && chown -R myapp:myapp /opt/myapp
 
