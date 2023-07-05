@@ -1,0 +1,24 @@
+readings:
+   source:
+      class: ${READINGS_SOURCE_CLASS}
+      script:
+        meterNumber: ${READINGS_METER:}
+        command: ${READINGS_SCRIPT_COMMAND}
+      commandline:
+        meterNumber: ${READINGS_METER:}
+      dummy:
+        meterNumber: ${READINGS_METER:}
+        date: ${DUMMY_READING_DATE}
+        value: ${DUMMY_READING_VALUE}
+
+dryRun: ${DRY_RUN:false}
+
+scheduling:
+  enabled: ${SCHEDULING_ENABLED:true}
+  cronExpression: ${SCHEDULING_CRON:0 0 * * * *}
+  effectiveCronExpression: "#{ ${scheduling.enabled} ? '${scheduling.cronExpression}' : '-' }" 
+
+tibber:
+   loginEmail: ${TIBBER_LOGIN}
+   password: ${TIBBER_PASSWORD}
+   meterRegisterId: ${TIBBER_METER_REGISTER_ID:}
