@@ -5,12 +5,12 @@ slug: tibber-meter-uploader
 description: An add-on to upload meter data to Tibber.
 url: "https://github.com/beatejakulator/tibber-meter-uploader/tree/main/example"
 arch:
-  - armhf
-  - armv7
+#  - armhf
+#  - armv7
   - aarch64
-  - amd64
-  - i386
+#  - amd64
+#  - i386
 init: false
 map:
   - share:rw
-image: "hub.docker.com/repository/docker/beatejakulator/{arch}-tibber-meter-uploader"
+image: "ghcr.io/beatejakulator/{arch}-tibber-meter-uploader"
