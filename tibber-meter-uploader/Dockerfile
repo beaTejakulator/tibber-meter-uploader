@@ -32,9 +32,9 @@ WORKDIR /opt/myapp
 
 COPY src/main/target/tibber-meter-uploader-1.0.0-SNAPSHOT.jar /opt/myapp/tibber-meter-uploader-1.0.0-SNAPSHOT.jar
 
-USER myapp
-
 COPY run.sh /
 RUN chmod a+x /run.sh
+
+USER myapp
 
 CMD ["/run.sh"]
