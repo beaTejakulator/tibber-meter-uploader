@@ -1,6 +1,6 @@
 # FROM debian:latest
 ARG BUILD_FROM
-FROM $BUILD_FROM
+FROM debian:buster-slim
 
 # Setting up the environment
 ENV DRY_RUN=false
